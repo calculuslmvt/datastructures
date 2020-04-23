@@ -1,77 +1,49 @@
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include <stdlib.h>
-struct node{
+
+struct node {
     
-    int a;
-    struct node*next;
-    
+    int data;
+    struct node *left;
+    struct node *right;
+  
 };
+struct node* insert( struct node* root, int data ) {
+		
+	if(root == NULL) {
+	
+        struct node* node = (struct node*)malloc(sizeof(struct node));
 
-int recursion(struct node*ptr)
+        node->data = data;
+
+        node->left = NULL;
+        node->right = NULL;
+        return node;
+	  
+	} else {
+      
+		struct node* cur;
+		
+		if(data <= root->data) {
+            cur = insert(root->left, data);
+            root->left = cur;
+		} else {
+            cur = insert(root->right, data);
+            root->right = cur;
+		}
+	
+		return root;
+	}
+}
+
+
+void preOrder( struct node *root) {
+
+if(root!=NULL)
 {
-    
-     if(ptr==NULL)
-     {return 0;}
-     else
-     {printf("%d\n",ptr->a);
-     recursion(ptr->next);}
-     
-    
-    
-    
-}
+printf("%d ",root->data);
+preOrder(root->left);
 
-int rev(struct node*ptr)
-{
-    
-    if(ptr==NULL)
-    return 0;
-    else
-    rev(ptr->next);
-    printf("%d\n",ptr->a);
-}
-
-
-void ll()
-{
-    struct node*head=(struct node*)malloc(sizeof(struct node));
-    struct node*ptr;
-    ptr=head;
-    int n;
-    scanf("%d",&n);
-    for(int i=0;i<n;i++)
-    {
-        
-       struct node*temp=(struct node*)malloc(sizeof(struct node));
-       ptr->next=temp;
-       temp->next=NULL;
-       int d;
-       scanf("%d",&d);
-       temp->a=d;
-       ptr=temp;
-        
-    }
-    head=head->next;
-    ptr=head;
-    
-    printf("entered list is  \n");
-    while(ptr!=NULL)
-    {
-        printf("%d \n",ptr->a);
-        ptr=ptr->next;
-        
-    }
-    recursion(head);
-    rev(head);
-}
-
-
-
-
-int main(void){
-    // program for post tree traversing
-    ll();
-
-    
-}
-
+preOrder(root->right);}
