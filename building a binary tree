@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+  int a;
+  struct node *left;
+  struct node*right;
+
+};
+
+void preorder(struct node*root)
+{//printf("hello");
+
+
+//printf("%d",root->left->right->left->a);
+
+
+
+if(root!=NULL)
+{
+printf("%d",root->a);
+preorder(root->left);
+preorder(root->right);
+}
+
+
+}
+
+struct node* create(struct node*ptr,int d)
+{
+
+if(ptr==NULL)
+{
+ptr=(struct node*)malloc(sizeof(struct node));
+ptr->a=d;
+ptr->left=NULL;
+ptr->right=NULL;
+return ptr;
+}
+else if (d<(ptr->a))
+{struct node*ptr1=NULL;
+  ptr1=ptr;
+ptr1=create(ptr1->left,d);
+ptr->left=ptr1;
+return ptr;
+}
+else if (d>(ptr->a))
+{
+struct node*ptr1=NULL;
+  ptr1=ptr;
+ptr1=create(ptr1->right,d);
+ptr->right=ptr1;
+return ptr;
+}
+
+
+}
+
+int main(){
+int s,d;
+printf("how many data are you going to enter \n");
+scanf("%d",&s);
+struct node*root=NULL;
+while(s-->0)
+{
+  printf("enter data \n");
+   scanf("  %d ",&d);
+  
+  root=create(root,d);
+}
+
+preorder(root);
+
+
+
+}
